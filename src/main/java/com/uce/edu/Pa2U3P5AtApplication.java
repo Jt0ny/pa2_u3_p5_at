@@ -19,6 +19,9 @@ public class Pa2U3P5AtApplication  implements CommandLineRunner{
 	@Autowired
 	private IFacturaService facturaService;
 	
+	//Join Types en Jakarta Persistence
+	
+	
 	public static void main(String[] args) {
 		SpringApplication.run(Pa2U3P5AtApplication.class, args);
 	}
@@ -26,36 +29,44 @@ public class Pa2U3P5AtApplication  implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 	
-		/*Factura fac= new Factura();
-		fac.setCedula("123");
-		fac.setFecha(LocalDate.now());
-		fac.setNumero("001-231");
 		
-		DetalleFactura deta= new DetalleFactura();
-		deta.setCantidad(4);
-		deta.setCodigoBarras("789456");
-		deta.setFactura(fac);
-		deta.setNombreProducto("Coca cola");
+		System.out.println("Inner Join");
 		
-		DetalleFactura deta1= new DetalleFactura();
-		deta1.setCantidad(4);
-		deta1.setCodigoBarras("789");
-		deta1.setFactura(fac);
-		deta1.setNombreProducto("Leche");
+		List<Factura>lista=this.facturaService.buscarFacturasInnerJoin();
 		
-		List<DetalleFactura>detalleFacturas=new ArrayList<>();
-		detalleFacturas.add(deta1);
-		detalleFacturas.add(deta);
-		
-		fac.setDetalleFacturas(detalleFacturas);
-		
-		this.facturaService.guardar(fac);*/
-		
-		Factura factura = this.facturaService.buscarPorNumero("001-231");
-		for (DetalleFactura det:factura.getDetalleFacturas()) {
-			System.out.println(det.getCodigoBarras());
+		for(Factura f:lista) {
+			System.out.println(f);
 		}
-		System.out.println(factura);
+		//
+		
+		System.out.println("Right Join");
+		
+		List<Factura>lista2=this.facturaService.buscarFacturasRightJoin();
+		
+		for(Factura f:lista2) {
+			System.out.println(f.getNumero());
+		}
+		//
+		
+		System.out.println("Left Join");
+		
+		List<Factura>lista3=this.facturaService.buscarFacturasLeftJoin();
+		
+		for(Factura f:lista3) {
+			System.out.println(f);
+		}
+		//
+		
+		System.out.println("Full Join");
+		
+		List<Factura>lista4=this.facturaService.buscarFacturasLeftJoin();
+		
+		for(Factura f:lista4) {
+			System.out.println(f);
+			for(DetalleFactura d:f.getDetalleFacturas()) {
+				System.out.println(d);
+			}
+		}
 		
 	}
 

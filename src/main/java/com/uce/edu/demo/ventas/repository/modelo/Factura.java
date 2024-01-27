@@ -33,12 +33,20 @@ public class Factura {
 	@Column(name="fact_cedula")
 	private String cedula;
 
-	@OneToMany(mappedBy = "factura",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "factura",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	private List<DetalleFactura> detalleFacturas;
 	
+	
+	
+//	@Override
+//	public String toString() {
+//		return "Factura [id=" + id + ", numero=" + numero + ", fecha=" + fecha + ", cedula=" + cedula + "]";
+//	}
+
 	@Override
 	public String toString() {
-		return "Factura [id=" + id + ", numero=" + numero + ", fecha=" + fecha + ", cedula=" + cedula + "]";
+		return "Factura [id=" + id + ", numero=" + numero + ", fecha=" + fecha + ", cedula=" + cedula
+				+ ", detalleFacturas=" + detalleFacturas + "]";
 	}
 
 	//set y get

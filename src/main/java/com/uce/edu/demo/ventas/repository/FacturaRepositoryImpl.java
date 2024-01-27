@@ -1,5 +1,7 @@
 package com.uce.edu.demo.ventas.repository;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import com.uce.edu.demo.ventas.repository.modelo.Factura;
@@ -32,4 +34,55 @@ public class FacturaRepositoryImpl implements IFacturaRepository{
 		
 	}
 
+	//
+	@Override
+	public List<Factura> seleccionarFacturasInnerJoin() {
+		//SQL: select * from factura f inner  join detalle_factura d on f.fact_id=d.defa_id_factura
+		//JPQL: select f from Factura f inner join f.detalleFactura d 
+		
+		
+		TypedQuery< Factura>query=this.entityManager.createQuery("select f from Factura f  join f.detalleFacturas d ",Factura.class);
+		List<Factura> lista =query.getResultList();
+		
+		for(Factura f :lista) {
+			f.getDetalleFacturas().size();
+		}
+		return lista;
+	}
+
+	@Override
+	public List<Factura> seleccionarFacturasRightJoin() {
+	
+		TypedQuery< Factura>query=this.entityManager.createQuery("select f from Factura f right join f.detalleFacturas d ",Factura.class);
+		List<Factura> lista =query.getResultList();
+		
+		for(Factura f :lista) {
+			f.getDetalleFacturas().size();
+		}
+		return lista;
+	
+	}
+
+	@Override
+	public List<Factura> seleccionarFacturasLeftJoin() {
+
+		TypedQuery< Factura>query=this.entityManager.createQuery("select f from Factura f Left join f.detalleFacturas d ",Factura.class);
+		List<Factura> lista =query.getResultList();
+		
+		for(Factura f :lista) {
+			f.getDetalleFacturas().size();
+		}
+		return lista;
+	}
+
+	@Override
+	public List<Factura> seleccionarFacturasFulltJoin() {
+		TypedQuery< Factura>query=this.entityManager.createQuery("select f from Factura f full join f.detalleFacturas d ",Factura.class);
+		List<Factura> lista =query.getResultList();
+		
+		for(Factura f :lista) {
+			f.getDetalleFacturas().size();
+		}
+		return lista;
+	}
 }
