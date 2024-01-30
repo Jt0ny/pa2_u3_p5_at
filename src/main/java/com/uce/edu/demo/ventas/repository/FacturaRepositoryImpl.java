@@ -43,10 +43,10 @@ public class FacturaRepositoryImpl implements IFacturaRepository{
 		
 		TypedQuery< Factura>query=this.entityManager.createQuery("select f from Factura f  join f.detalleFacturas d ",Factura.class);
 		List<Factura> lista =query.getResultList();
-		
-		for(Factura f :lista) {
-			f.getDetalleFacturas().size();
-		}
+//		
+//		for(Factura f :lista) {
+//			f.getDetalleFacturas().size();
+//		}
 		return lista;
 	}
 
@@ -84,5 +84,29 @@ public class FacturaRepositoryImpl implements IFacturaRepository{
 			f.getDetalleFacturas().size();
 		}
 		return lista;
+	}
+
+	@Override
+	public List<Factura> seleccionarFacturasWheretJoin() {
+		// SQL: select f.* from factura f,detalle_factura d where f.fact_id= d.defa_id_factura
+		//Usando JPQL
+		//JPQL:  select f from Factura f , DetalleFactura d 
+		//where f.id =d.factura.id
+		//where f = d.factura --
+		TypedQuery<Factura>query=this.entityManager.createQuery("select f from Factura f , DetalleFactura d where f = d.factura",Factura.class);
+		
+		List<Factura> lista =query.getResultList();
+		for(Factura f :lista) {
+			f.getDetalleFacturas().size();
+		}
+		return lista;
+	}
+
+	@Override
+	public List<Factura> seleccionarFacturasFetchJoin() {
+		//JPQL: select f from Factura f JOIN FETCH f.detalleFacturas d
+		TypedQuery<Factura> query=this.entityManager.createQuery("select f from Factura f JOIN FETCH f.detalleFacturas d",Factura.class);
+		
+		return query.getResultList();
 	}
 }
