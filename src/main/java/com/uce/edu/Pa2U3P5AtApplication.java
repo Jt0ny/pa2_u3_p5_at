@@ -11,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.uce.edu.demo.ventas.repository.modelo.DetalleFactura;
 import com.uce.edu.demo.ventas.repository.modelo.Factura;
+import com.uce.edu.demo.ventas.repository.modelo.dto.FacturaDTO;
 import com.uce.edu.demo.ventas.service.IFacturaService;
 
 @SpringBootApplication
@@ -29,35 +30,28 @@ public class Pa2U3P5AtApplication  implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 	
-		System.out.println("Inner Join");
-
-		List<Factura>lista=this.facturaService.buscarFacturasInnerJoin();
-
-		for(Factura f:lista) {
-			System.out.println(f.getNumero());
-//			for(DetalleFactura d :f.getDetalleFacturas()) {
-//				System.out.println(d.getNombreProducto());
-//			}
-			
+		
+		System.out.println("Update");
+		int cantidad=this.facturaService.actualizarFechas(LocalDate.of(2020, 1, 15),LocalDate.of(2024, 1, 10));
+		System.out.println("Cantidad de registros /filas actualizadas");
+		System.out.println(cantidad);
+		
+		System.out.println("Delete");
+		//int cantidad1=this.facturaService.borarPorNumero("001-231");
+		System.out.println("Cantidad de registros /filas eliminadas");
+		//System.out.println(cantidad1);
+		
+		//this.facturaService.borrar(1);
+		
+		//DTO: Data Transfer Object - Patron de diseño
+		
+		System.out.println("DTO");
+		List<FacturaDTO>listaDTO=this.facturaService.buscarFactutrasDTO();
+		for(FacturaDTO fDTO:listaDTO) {
+			System.out.println(fDTO);
 		}
-		//
-		System.out.println("Where Join");
-		List<Factura>lista1=this.facturaService.buscarFacturasWheretJoin();
-		for(Factura f:lista1) {
-			System.out.println(f.getNumero());
-			for(DetalleFactura d :f.getDetalleFacturas()) {
-				System.out.println(d.getNombreProducto());
-			}
-		}
-		//
-		System.out.println(" Fetch Join");
-		List<Factura>lista2=this.facturaService.buscarFacturasFetchJoin();
-		for(Factura f:lista2) {
-			System.out.println(f.getNumero());
-			for(DetalleFactura d :f.getDetalleFacturas()) {
-				System.out.println(d.getNombreProducto());
-			}
-		}
+		
+		
 	}
 
 }
