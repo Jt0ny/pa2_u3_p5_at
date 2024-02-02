@@ -35,4 +35,7 @@ public interface IFacturaRepository {
 	//
 	public List<FacturaDTO> seleccionarFactutrasDTO();
 
+	//Tarea 
+	//1.- Inner join
+	
 }
