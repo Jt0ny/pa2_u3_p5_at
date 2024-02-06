@@ -31,7 +31,7 @@ public class FacturaServiceImpl implements IFacturaService {
 	}
 
 	@Override
-	@Transactional(value = TxType.REQUIRED)
+	@Transactional(value = TxType.REQUIRES_NEW)
 	public void guardar(Factura factura,Cliente cliente) {
 		System.out.println(
 		TransactionSynchronizationManager.isActualTransactionActive());
@@ -100,6 +100,15 @@ public class FacturaServiceImpl implements IFacturaService {
 	public List<FacturaDTO> buscarFactutrasDTO() {
 		
 		return this.facturaRepository.seleccionarFactutrasDTO();
+	}
+
+	@Override
+	@Transactional(value = TxType.MANDATORY)//obliga a de donde se lo llame tenga una transaccion
+	public void prueba() {
+		System.out.println("Este metodo es de prueba");
+		System.out.println(
+				"Prueba: "+TransactionSynchronizationManager.isActualTransactionActive());
+				
 	}
 
 }
