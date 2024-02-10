@@ -1,5 +1,6 @@
 package com.uce.edu.demo.ventas.service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -7,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
-import com.uce.edu.demo.ventas.repository.IClienteRepository;
 import com.uce.edu.demo.ventas.repository.IFacturaRepository;
 import com.uce.edu.demo.ventas.repository.modelo.Cliente;
 import com.uce.edu.demo.ventas.repository.modelo.Factura;
@@ -33,6 +33,9 @@ public class FacturaServiceImpl implements IFacturaService {
 	@Override
 	@Transactional(value = TxType.REQUIRES_NEW)
 	public void guardar(Factura factura,Cliente cliente) {
+		BigDecimal valor=new BigDecimal(100);
+		valor=valor.multiply(new BigDecimal(0.12));
+		factura.setValorIVA(valor);
 		System.out.println(
 		TransactionSynchronizationManager.isActualTransactionActive());
 		this.facturaRepository.insertar(factura);
@@ -109,6 +112,23 @@ public class FacturaServiceImpl implements IFacturaService {
 		System.out.println(
 				"Prueba: "+TransactionSynchronizationManager.isActualTransactionActive());
 				
+	}
+	
+	
+	@Override
+	@Transactional(value = TxType.REQUIRED)
+	public void pruebaSupports() {
+		System.out.println(
+				"Prueba Factura: "+TransactionSynchronizationManager.isActualTransactionActive());
+	  this.clienteService.pruebaSupports();
+	}
+
+	@Override
+	//@Transactional(value = TxType.REQUIRES_NEW)
+	public void pruebaNever() {
+		System.out.println(
+	"Prueba Factura: "+TransactionSynchronizationManager.isActualTransactionActive());
+	  this.clienteService.pruebaNever();
 	}
 
 }

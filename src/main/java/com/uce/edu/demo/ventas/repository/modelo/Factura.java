@@ -1,5 +1,6 @@
 package com.uce.edu.demo.ventas.repository.modelo;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name="factura")
@@ -32,6 +34,10 @@ public class Factura {
 	
 	@Column(name="fact_cedula")
 	private String cedula;
+	
+	
+	@Transient//Para cuando no quiero que se mapee un atributo
+	private BigDecimal valorIVA;
 
 	@OneToMany(mappedBy = "factura",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	private List<DetalleFactura> detalleFacturas;
@@ -88,6 +94,14 @@ public class Factura {
 
 	public void setDetalleFacturas(List<DetalleFactura> detalleFacturas) {
 		this.detalleFacturas = detalleFacturas;
+	}
+
+	public BigDecimal getValorIVA() {
+		return valorIVA;
+	}
+
+	public void setValorIVA(BigDecimal valorIVA) {
+		this.valorIVA = valorIVA;
 	}
 
 	

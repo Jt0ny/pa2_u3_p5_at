@@ -25,22 +25,9 @@ public class Pa2U3P5AtApplication  implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 	
-		System.out.println(TransactionSynchronizationManager.isActualTransactionActive());
-	
-		Factura fact= new Factura();
-		fact.setCedula("123");
-		fact.setFecha(LocalDate.now());
-		fact.setNumero("001");
+		//this.facturaService.pruebaSupports();
 		
-		Cliente cli=new Cliente();
-		cli.setApellido(null);
-		cli.setNombre("Anthony");
-		
-		//this.facturaService.guardar(fact,cli);
-		
-		System.out.println("Main: "+TransactionSynchronizationManager.isActualTransactionActive());
-		
-		this.facturaService.prueba();
+		//this.facturaService.pruebaNever();
 	
 	
 	}

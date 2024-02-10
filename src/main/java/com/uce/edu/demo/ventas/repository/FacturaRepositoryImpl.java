@@ -165,4 +165,12 @@ public class FacturaRepositoryImpl implements IFacturaRepository{
 		return null;
 		
 	}
+	
+	////////////// Not_supported
+	@Override
+	@Transactional(value = TxType.NOT_SUPPORTED)
+	public List<Factura> seleccionarTodos() {
+		TypedQuery<Factura>query=this.entityManager.createQuery("select f from Factura f",Factura.class);
+		return query.getResultList();
+	}
 }
