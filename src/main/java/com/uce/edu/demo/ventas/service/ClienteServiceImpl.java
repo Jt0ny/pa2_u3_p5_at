@@ -3,6 +3,7 @@ package com.uce.edu.demo.ventas.service;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
@@ -22,6 +23,7 @@ public class ClienteServiceImpl implements IClienteService{
 	@Override
 	@Transactional(value=TxType.REQUIRES_NEW)//T2
 	//begin
+	@Async
 	public void guardar(Cliente cliente) {
 	System.out.println("Nombre Hilo: "+Thread.currentThread().getName());
 		

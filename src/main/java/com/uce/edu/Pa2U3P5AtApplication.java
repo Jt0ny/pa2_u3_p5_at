@@ -7,11 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 import com.uce.edu.demo.ventas.repository.modelo.Cliente;
 import com.uce.edu.demo.ventas.service.IClienteService;
 
 @SpringBootApplication
+@EnableAsync
 public class Pa2U3P5AtApplication  implements CommandLineRunner{
 
 	@Autowired
@@ -39,7 +41,7 @@ public class Pa2U3P5AtApplication  implements CommandLineRunner{
 //	
 		//PROGRAMACION EN PARALELO(multiHilo=MultiThread)
 		
-		System.out.println("Nombre Hilo: "+Thread.currentThread().getName());
+		/*System.out.println("Nombre Hilo: "+Thread.currentThread().getName());
 		long tiempoInicial =System.currentTimeMillis();
 		List<Cliente>listaClientes= new ArrayList<>();
 		for(int i=1;i<=100;i++) {
@@ -54,8 +56,22 @@ public class Pa2U3P5AtApplication  implements CommandLineRunner{
 		
 		long tiempoFinal=System.currentTimeMillis();
 		long tiempoTranscurrido=(tiempoFinal-tiempoInicial)/1000;
-		System.out.println("Tiempo transcurrido en segundos: "+tiempoTranscurrido);
+		System.out.println("Tiempo transcurrido en segundos: "+tiempoTranscurrido);*/
 		
+		System.out.println("Nombre Hilo: "+Thread.currentThread().getName());
+		long tiempoInicial =System.currentTimeMillis();
+		for (int i=1; i<=10;i++) {
+			Cliente cliente = new Cliente();
+			cliente.setNombre("CN"+i);
+			cliente.setApellido("A"+i);
+			this.clienteService.guardar(cliente);
+		}
+		long tiempoFinal=System.currentTimeMillis();
+		
+		long tiempoTranscurrido=(tiempoFinal-tiempoInicial);
+		System.out.println("Tiempo transcurrido en segundos: "+tiempoTranscurrido);
+	
+			
 	}
 
 }
